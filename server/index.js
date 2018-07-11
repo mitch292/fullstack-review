@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../database/index.js')
 let app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -16,6 +17,8 @@ app.get('/repos', function (req, res) {
 });
 
 let port = 1128;
+
+db;
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
