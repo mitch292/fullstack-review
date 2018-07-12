@@ -4,7 +4,6 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import {testData} from '../../data.js';  
-import TOKEN from '../../config.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,12 +17,12 @@ class App extends React.Component {
 
   search (userToFind) {
     $.ajax({
-      url:'http://127.0.0.1:1128/repos',
+      url:`/repos`,
       type: 'POST',
       data: {user: userToFind},
       success: () => {
         $.get({
-          url: 'http://127.0.0.1:1128/fromDb',
+          url: `/fromDb`,
           data: {
             user: userToFind
           },
@@ -46,12 +45,12 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url:'http://127.0.0.1:1128/repos',
+      url:`/repos`,
       type: 'POST',
       data: {user: 'reactjs'},
       success: () => {
         $.get({
-          url: 'http://127.0.0.1:1128/fromDb',
+          url: `/fromDb`,
           data: {
             user: 'reactjs'
           },

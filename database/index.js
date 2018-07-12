@@ -1,11 +1,5 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
-// const Schema = mongoose.Schema;
-//original code...redoing this to follow mongoose documentation
-// let repoSchema = mongoose.Schema({
-//   // TODO- your schema here!
-
-// });
 
 let repoSchema = mongoose.Schema({
   githubId: {type: Number, unique: true},
@@ -20,10 +14,6 @@ let repoSchema = mongoose.Schema({
   repoUrl: String
 });
 
-// TODO: Add a method to our model to return the twofive most recent reops from hack reactor
-// repoSchema.methods.recentTwentyFive = () => {
-
-// }
 
 let Repo = mongoose.model('Repo', repoSchema);
 
@@ -63,11 +53,3 @@ let find = (query, callback) => {
 
 exports.save = save;
 exports.find = find;
-
-// , (err, repo) => {
-//   if (err) {
-//     console.log('error querying the db');
-//   } else {
-//     console.log('success finding the data from mongo');
-//     callback(repo);
-//   }

@@ -1,5 +1,5 @@
 const request = require('request');
-const config = require('../config.js');
+const config = process.env.GITHUB_TOKEN || require('../config.js');
 
 let getReposByUsername = ({user}, callback) => {
   // TODO - Use the request module to request repos for a specific

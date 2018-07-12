@@ -4,6 +4,7 @@ let app = express();
 const github = require('../helpers/github.js').getReposByUsername;
 const bodyParse = require('body-parser');
 const cors = require('cors');
+const port = process.env.PORT || 1128;
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParse.urlencoded({extended:true}));
@@ -12,10 +13,6 @@ app.use(cors());
 
 
 app.post('/repos',(req, res) => {
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
   github(req.body, (body) => {
     db.save(body)
   });
@@ -40,9 +37,8 @@ app.get('/fromDb', (req, res)=> {
 })
 
 
-let port = 1128;
-
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
 });
 
+exports.port = port;
