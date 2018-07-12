@@ -9,21 +9,18 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParse.urlencoded({extended:true}));
 app.use(bodyParse.json());
 app.use(cors());
-// let ourResults = app.use((req, res) => {
-//   return github(req.query)
-// })
 
-// console.log('our results in outer scope', ourResults)
 
-app.post('/repos', function (req, res) {
+app.post('/repos',(req, res) => {
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
   github(req.body, (body) => {
-    db.save(body);
+    db.save(body)
   });
-})
+  res.send();
+});
 
 app.get('/repos',function (req, res) {
   // TODO - your code here!
@@ -35,8 +32,15 @@ app.get('/repos',function (req, res) {
   // res.send(ourResults)
 });
 
-let port = 1128;
+app.get('/fromDb', (req, res)=> {
+  db.find(req.query, (theRepos) => {
 
+    res.send(theRepos)
+  })
+})
+
+
+let port = 1128;
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);

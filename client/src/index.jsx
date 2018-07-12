@@ -21,33 +21,53 @@ class App extends React.Component {
       url:'http://127.0.0.1:1128/repos',
       type: 'POST',
       data: {user: userToFind},
-      success: (foundData) => {
-        this.setState({
-          repos: foundData
-        });
-      },
+      success: () => {
+        $.get({
+          url: 'http://127.0.0.1:1128/fromDb',
+          data: {
+            user: userToFind
+          },
+          success: (foundData) => {
+            console.log('the found data', foundData)
+            this.setState({
+              repos: foundData
+            });
+          },
+          error: () => {
+            console.error('there was an error fetching the user from the db')
+          }
+        }) 
+        },
       error: (err) => {
         console.error('There was an error sending our to the server to fetch our search', err)
       }
-
-
     })
-  }
+  };
 
   componentDidMount() {
-    $.get({
-      url: 'http://127.0.0.1:1128/repos',
-      data: {
-        user: 'hackreactor'
-      },
-      success: (defaultData) => {
-        console.log('success')
-        this.setState({
-          repos: defaultData
-        });
-      },
-      error: () => {
-        console.error('there was an error fetching default when component mounted')
+    $.ajax({
+      url:'http://127.0.0.1:1128/repos',
+      type: 'POST',
+      data: {user: 'reactjs'},
+      success: () => {
+        $.get({
+          url: 'http://127.0.0.1:1128/fromDb',
+          data: {
+            user: 'reactjs'
+          },
+          success: (foundData) => {
+            console.log('the found data', foundData)
+            this.setState({
+              repos: foundData
+            });
+          },
+          error: () => {
+            console.error('there was an error fetching the user from the db')
+          }
+        }) 
+        },
+      error: (err) => {
+        console.error('There was an error sending our to the server to fetch our search', err)
       }
     })
   }

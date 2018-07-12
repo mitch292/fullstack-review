@@ -2,8 +2,8 @@ import React from 'react';
 import RepoListItem from './RepoListItem.jsx';
 
 const RepoList = (props) => {
-  const ourRepos = props.repos.map((repo) => 
-    <RepoListItem key={repo.id} name={repo.name} user={repo.owner.login} link={repo.url} />
+  const ourRepos = props.repos.map((repo, i) => 
+    <RepoListItem key={i} name={repo.repoName} user={repo.login} description={repo.description} repoUrl={repo.repoUrl} />
   )
   return (
   <div>
