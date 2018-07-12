@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+let stringForDbConnect = process.env.MONGODB_URI|| 'mongodb://localhost/fetcher';
+mongoose.connect(stringForDbConnect);
 
 let repoSchema = mongoose.Schema({
   githubId: {type: Number, unique: true},
