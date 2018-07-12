@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
-import {testData} from '../../data.js'; 
+import {testData} from '../../data.js';  
+import TOKEN from '../../config.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,12 +12,44 @@ class App extends React.Component {
     this.state = { 
       repos: testData
     }
+    this.setState = this.setState.bind(this);
 
   }
 
-  search (term) {
-    console.log(`${term} was searched`);
-    // TODO
+  search (userToFind) {
+    $.ajax({
+      url:'http://127.0.0.1:1128/repos',
+      type: 'POST',
+      data: {user: userToFind},
+      success: (foundData) => {
+        this.setState({
+          repos: foundData
+        });
+      },
+      error: (err) => {
+        console.error('There was an error sending our to the server to fetch our search', err)
+      }
+
+
+    })
+  }
+
+  componentDidMount() {
+    $.get({
+      url: 'http://127.0.0.1:1128/repos',
+      data: {
+        user: 'hackreactor'
+      },
+      success: (defaultData) => {
+        console.log('success')
+        this.setState({
+          repos: defaultData
+        });
+      },
+      error: () => {
+        console.error('there was an error fetching default when component mounted')
+      }
+    })
   }
 
   render () {
