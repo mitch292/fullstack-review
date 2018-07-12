@@ -4,6 +4,9 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import {testData} from '../../data.js';  
+let host = process.env.HEROKU_URL || '127.0.0.1';
+let port = process.env.PORT || 1128;
+
 
 class App extends React.Component {
   constructor(props) {
@@ -16,13 +19,14 @@ class App extends React.Component {
   }
 
   search (userToFind) {
+    console.log(host)
     $.ajax({
-      url:`/repos`,
+      url:`http://${host}:${port}/repos`,
       type: 'POST',
       data: {user: userToFind},
       success: () => {
         $.get({
-          url: `/fromDb`,
+          url: `http://${host}:${port}/fromDb`,
           data: {
             user: userToFind
           },
@@ -45,12 +49,12 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url:`/repos`,
+      url:`http://${host}:${port}/repos`,
       type: 'POST',
       data: {user: 'reactjs'},
       success: () => {
         $.get({
-          url: `/fromDb`,
+          url: `http://${host}:${port}/fromDb`,
           data: {
             user: 'reactjs'
           },
